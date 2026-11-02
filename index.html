@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casa dos Gordinhos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#14213d;--mute:#5b6b82;--line:#d5dde8;--acc:#0b7a5a;--acc-ink:#fff;--warn:#b4372b;--hl:#14213d;--hl-ink:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1522;--card:#17213a;--ink:#e8eef8;--mute:#9aabc4;--line:#2a3856;--acc:#3ecf9f;--acc-ink:#06241a;--warn:#ff8a7a;--hl:#e8eef8;--hl-ink:#0e1522;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1522;--card:#17213a;--ink:#e8eef8;--mute:#9aabc4;--line:#2a3856;--acc:#3ecf9f;--acc-ink:#06241a;--warn:#ff8a7a;--hl:#e8eef8;--hl-ink:#0e1522;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.5rem;font-weight:800;margin:6px 0 14px}
+h2{font-size:1.1rem;font-weight:800;margin:0}
+.sum{background:var(--hl);color:var(--hl-ink);border-radius:18px;padding:18px}
+.sum small{opacity:.75;display:block}
+.big{font-size:2.1rem;font-weight:800;line-height:1.1;margin:2px 0 12px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>div{flex:1 1 130px}
+.row b{font-size:1.1rem;display:block}
+.plan{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.plan label{font-weight:600;display:block;margin-bottom:6px}
+.plan .m{display:flex;gap:10px;align-items:center}
+.plan .m input{width:90px}
+.res{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.res div{background:var(--bg);border-radius:10px;padding:10px}
+.res small{color:var(--mute);display:block}
+.res b{font-size:1.15rem}
+.res .main b{color:var(--acc)}
+input[type=text],input[type=number],input[type=date],select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;min-height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;min-height:44px;padding:0 14px;cursor:pointer}
+.lh{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.lh select{width:auto;background:var(--card)}
+#resumo{list-style:none;margin:10px 0 0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:14px 14px 0 0;overflow:hidden}
+#resumo li{border-bottom:1px solid var(--line)}
+#resumo li:last-child{border-bottom:0}
+#resumo .it{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;background:transparent;color:var(--ink);text-align:left;border-radius:0;min-height:56px;font-weight:400}
+#resumo .inf{flex:1;min-width:0}
+#resumo .inf b{display:block;overflow-wrap:anywhere;font-weight:600}
+#resumo .inf small{color:var(--mute)}
+#resumo .sub{font-weight:800}
+#resumo li.done .inf b{text-decoration:line-through}
+#resumo li.done .it{opacity:.65}
+.tag{display:inline-block;font-size:.75rem;background:var(--acc);color:var(--acc-ink);border-radius:6px;padding:1px 6px;margin-left:6px;font-weight:600}
+.empty{text-align:center;color:var(--mute);padding:26px 10px}
+.rt{display:flex;justify-content:space-between;padding:12px;font-weight:800;background:var(--bg);border:1px solid var(--line);border-radius:0 0 14px 14px;margin-top:-1px}
+.add{width:100%;margin-top:14px;background:var(--acc);color:var(--acc-ink);font-size:1rem}
+.tools{display:flex;justify-content:space-between;margin-top:18px}
+.tools button{background:transparent;color:var(--mute);text-decoration:underline;font-weight:400}
+#ov{position:fixed;inset:0;background:rgba(5,10,20,.55);display:none;align-items:flex-end;justify-content:center;z-index:20}
+#ov.on{display:flex}
+#sheet{background:var(--card);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto}
+#sheet h3{margin:0 0 2px;font-size:1.15rem;overflow-wrap:anywhere}
+#sheet .d{color:var(--mute);margin:0 0 12px}
+#sheet .btn{display:block;width:100%;margin-top:8px;background:var(--bg);color:var(--ink);text-align:left;padding:0 14px}
+#sheet .btn.p{background:var(--acc);color:var(--acc-ink)}
+#sheet .btn.x{color:var(--warn)}
+#sheet .btn.c{background:transparent;text-align:center;color:var(--mute)}
+#sheet label{display:block;font-size:.85rem;color:var(--mute);margin:10px 0 3px}
+#sheet .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#sheet .chk{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:1rem;font-weight:600;min-height:44px}
+#sheet .chk input{width:22px;height:22px;accent-color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>Casa dos Gordinhos</h1>
+<section class="sum" aria-live="polite">
+  <small>Total de todos os produtos</small>
+  <div class="big" id="total">R$ 0,00</div>
+  <div class="row">
+    <div><small>Já comprado</small><b id="comprado">R$ 0,00</b></div>
+    <div><small>Falta comprar</small><b id="falta">R$ 0,00</b></div>
+  </div>
+</section>
+
+<div class="lh"><h2>Lista de compras</h2>
+  <select id="filtro" aria-label="Mostrar produtos"><option value="pendentes">A comprar</option><option value="comprados">Já comprados</option><option value="todos">Todos</option></select></div>
+<ul id="resumo"></ul>
+<div class="rt"><span id="resLabel">Total</span><span id="resTotal">R$ 0,00</span></div>
+<button class="add" id="add">+ Adicionar produto</button>
+<div class="tools"><button id="tema">Alternar tema</button><button id="codigo">Código da casa</button><button id="limpar">Apagar tudo</button></div>
+<p class="empty" id="sync" style="padding:12px 0 0"></p>
+</main>
+
+<div id="ov" role="dialog" aria-modal="true"><div id="sheet"></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// Configuração do projeto Firebase "gordinhos"
+var FIREBASE_CONFIG={
+  apiKey:"AIzaSyA7cwAnIR8crCX0lsDo_ybwTZjJuKDNlyM",
+  authDomain:"gordinhos.firebaseapp.com",
+  projectId:"gordinhos",
+  storageBucket:"gordinhos.firebasestorage.app",
+  messagingSenderId:"374874288757",
+  appId:"1:374874288757:web:5c7581f5c4e4c35ed17e3c"
+};
+(function(){
+  var KEY="planejador-compras-v1";
+  var state={meses:6,itens:[],filtro:"pendentes"};
+  try{var s=localStorage.getItem(KEY);if(s){var p=JSON.parse(s);if(p&&Array.isArray(p.itens))state=p;}}catch(e){}
+  if(!state.filtro)state.filtro="pendentes";
+  var db=null,legacy=(state.itens||[]).slice();
+  var brl=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+  var $=function(id){return document.getElementById(id)};
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({meses:state.meses,filtro:state.filtro,itens:db?[]:state.itens}));}catch(e){}}
+  function erro(){alert("Não foi possível salvar online. Verifique sua conexão e tente de novo.");}
+  function persist(it){
+    if(!db){save();return;}
+    var o={nome:it.nome||"",valor:it.valor==null?"":it.valor,qtd:it.qtd==null?"":it.qtd,data:it.data||"",comprado:!!it.comprado};
+    try{db.collection("itens").doc(it.id).set(o).catch(erro);}catch(e){erro();}
+  }
+  function apagar(it){
+    state.itens=state.itens.filter(function(x){return x!==it&&x.id!==it.id});
+    if(!db){save();return;}
+    try{db.collection("itens").doc(it.id).delete().catch(erro);}catch(e){erro();}
+  }
+  function num(v){var n=parseFloat(v);return isFinite(n)&&n>0?n:0}
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+  function sub(i){return brl.format(num(i.valor)*num(i.qtd))}
+  function vis(){return state.itens.filter(function(i){return state.filtro==="comprados"?i.comprado:state.filtro==="pendentes"?!i.comprado:true})}
+  function fdata(d){return d?d.split("-").reverse().join("/"):"sem data"}
+
+  function totals(){
+    var t=0,c=0;
+    state.itens.forEach(function(i){var v=num(i.valor)*num(i.qtd);t+=v;if(i.comprado)c+=v});
+    $("total").textContent=brl.format(t);
+    $("comprado").textContent=brl.format(c);
+    $("falta").textContent=brl.format(t-c);
+  }
+
+  function render(){
+    var box=$("resumo"),t=0;
+    var l=vis().slice().sort(function(a,b){return (a.data||"9999").localeCompare(b.data||"9999")});
+    box.innerHTML="";
+    if(!l.length){box.innerHTML='<li class="empty">'+(state.itens.length?"Nenhum produto nesta lista.":"Nenhum produto ainda. Toque em “Adicionar produto”.")+'</li>';}
+    l.forEach(function(it){
+      t+=num(it.valor)*num(it.qtd);
+      var li=document.createElement("li");li.className=it.comprado?"done":"";
+      li.innerHTML='<button class="it"><div class="inf"><b></b><small></small></div><span class="sub"></span></button>';
+      var b=li.querySelector("b");b.textContent=it.nome||"Sem nome";
+      if(it.comprado&&state.filtro==="todos"){var g=document.createElement("span");g.className="tag";g.textContent="Comprado";b.appendChild(g);}
+      li.querySelector("small").textContent=(num(it.qtd)||0)+" × "+brl.format(num(it.valor))+" · "+fdata(it.data);
+      li.querySelector(".sub").textContent=sub(it);
+      li.querySelector(".it").addEventListener("click",function(){menu(it)});
+      box.appendChild(li);
+    });
+    $("resLabel").textContent=(state.filtro==="comprados"?"Total já comprado":state.filtro==="pendentes"?"Total a comprar":"Total geral")+" ("+l.length+")";
+    $("resTotal").textContent=brl.format(t);
+    totals();
+  }
+
+  var onSheet=null;
+  $("sheet").addEventListener("click",function(e){if(onSheet)onSheet(e)});
+  function open(html){onSheet=null;$("sheet").innerHTML=html;$("ov").classList.add("on");}
+  function close(){onSheet=null;$("ov").classList.remove("on");$("sheet").innerHTML="";}
+  function confirmar(titulo,msg,rotulo,fn){
+    open('<h3></h3><p class="d"></p><button class="btn x" data-a="sim"></button><button class="btn c" data-a="nao">Cancelar</button>');
+    var sh=$("sheet");
+    sh.querySelector("h3").textContent=titulo;
+    sh.querySelector(".d").textContent=msg;
+    sh.querySelector('[data-a="sim"]').textContent=rotulo;
+    onSheet=function(e){
+      var a=e.target.dataset&&e.target.dataset.a;if(!a)return;
+      if(a==="sim"){onSheet=null;fn();}else close();
+    };
+  }
+  function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;")}
+
+  function menu(it){
+    open('<h3></h3><p class="d"></p>'+
+      '<button class="btn p" data-a="edit">Editar</button>'+
+      '<button class="btn" data-a="done"></button>'+
+      '<button class="btn x" data-a="del">Excluir</button>'+
+      '<button class="btn c" data-a="close">Fechar</button>');
+    var sh=$("sheet");
+    sh.querySelector("h3").textContent=it.nome||"Sem nome";
+    sh.querySelector(".d").textContent=(num(it.qtd)||0)+" × "+brl.format(num(it.valor))+" = "+sub(it);
+    sh.querySelector('[data-a="done"]').textContent=it.comprado?"Desmarcar como comprado":"Marcar como comprado";
+    onSheet=(function(e){
+      var a=e.target.dataset&&e.target.dataset.a;if(!a)return;
+      onSheet=null;
+      if(a==="close")close();
+      else if(a==="edit")form(it);
+      else if(a==="done"){it.comprado=!it.comprado;persist(it);render();close();}
+      else if(a==="del")confirmar("Excluir produto?",it.nome||"Sem nome","Sim, excluir",function(){apagar(it);render();close();});
+    });
+  }
+
+  function form(it){
+    var novo=!it;
+    var d=it||{id:uid(),nome:"",valor:"",qtd:1,data:"",comprado:false};
+    open('<h3>'+(novo?"Novo produto":"Editar produto")+'</h3>'+
+      '<label for="f-nome">Produto</label><input id="f-nome" type="text" placeholder="Ex.: Geladeira" value="'+esc(d.nome)+'">'+
+      '<div class="two"><div><label for="f-valor">Valor (R$)</label><input id="f-valor" type="number" inputmode="decimal" step="0.01" min="0" value="'+esc(d.valor)+'"></div>'+
+      '<div><label for="f-qtd">Quantidade</label><input id="f-qtd" type="number" inputmode="numeric" step="1" min="1" value="'+esc(d.qtd)+'"></div></div>'+
+      '<label for="f-data">Data prevista da compra</label><input id="f-data" type="date" value="'+esc(d.data)+'">'+
+      '<label class="chk"><input id="f-ok" type="checkbox"'+(d.comprado?" checked":"")+'> Já comprado</label>'+
+      '<button class="btn p" data-a="save">Salvar</button><button class="btn c" data-a="close">Cancelar</button>');
+    var sh=$("sheet");
+    $("f-nome").focus();
+    onSheet=(function(e){
+      var a=e.target.dataset&&e.target.dataset.a;if(!a)return;
+      if(a==="close"){onSheet=null;close();return;}
+      if(a==="save"){
+        if(!$("f-nome").value.trim()){$("f-nome").focus();return;}
+        onSheet=null;
+        d.nome=$("f-nome").value.trim();d.valor=$("f-valor").value;d.qtd=$("f-qtd").value;d.data=$("f-data").value;d.comprado=$("f-ok").checked;
+        if(novo)state.itens.push(d);
+        persist(d);render();close();
+      }
+    });
+  }
+
+  $("ov").addEventListener("click",function(e){if(e.target===$("ov"))close();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
+  $("filtro").value=state.filtro;
+  $("filtro").addEventListener("change",function(){state.filtro=$("filtro").value;save();render();});
+  $("add").addEventListener("click",function(){form(null)});
+  $("limpar").addEventListener("click",function(){
+    confirmar("Apagar tudo?","Todos os produtos serão excluídos. Isso não pode ser desfeito.","Sim, apagar tudo",function(){state.itens.slice().forEach(function(x){apagar(x)});render();close();});
+  });
+  $("tema").addEventListener("click",function(){
+    var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme=dark?"light":"dark";
+  });
+  render();
+  var CODE_KEY="casa-gordinhos-codigo",unsub=null,fs=null;
+  var configurado=!!(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.apiKey.indexOf("COLE")!==0);
+  function semNuvem(msg){db=null;if(unsub){unsub();unsub=null;}$("sync").textContent=msg;}
+
+  function conectar(codigo){
+    if(unsub){unsub();unsub=null;}
+    var col=fs.collection("casas").doc(codigo).collection("itens"),first=true;
+    db={collection:function(){return col}};
+    $("sync").textContent="Conectando...";
+    unsub=col.onSnapshot(function(snap){
+      $("sync").textContent="Lista salva online (código: "+codigo+").";
+      if(first){
+        first=false;
+        if(snap.empty&&legacy.length){var l=legacy;legacy=[];state.itens=l;l.forEach(persist);save();render();return;}
+        legacy=[];save();
+      }
+      state.itens=snap.docs.map(function(x){return Object.assign({id:x.id},x.data())});
+      render();
+    },function(){semNuvem("Sem acesso ao banco online. Salvo apenas neste aparelho.");});
+  }
+
+  function pedirCodigo(){
+    open('<h3>Código da casa</h3><p class="d">Use o mesmo código em todos os aparelhos. Ele funciona como a senha da lista: escolha algo longo e difícil de adivinhar.</p>'+
+      '<label for="f-cod">Código</label><input id="f-cod" type="text" autocapitalize="none" autocomplete="off" placeholder="ex.: gordinhos-2026-xk7">'+
+      '<button class="btn p" data-a="ok">Entrar</button><button class="btn c" data-a="close">Agora não</button>');
+    var sh=$("sheet");$("f-cod").focus();
+    onSheet=(function(e){
+      var a=e.target.dataset&&e.target.dataset.a;if(!a)return;
+      if(a==="close"){onSheet=null;close();return;}
+      var c=$("f-cod").value.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");
+      if(c.length<6){alert("Use pelo menos 6 caracteres (letras, números, - ou _).");return;}
+      onSheet=null;
+      try{localStorage.setItem(CODE_KEY,c);}catch(x){}
+      close();conectar(c);
+    });
+  }
+
+  $("sync").textContent="Salvo apenas neste aparelho.";
+  if(!configurado){
+    $("sync").textContent="Firebase ainda não configurado. Salvo apenas neste aparelho.";
+  }else{
+    try{
+      firebase.initializeApp(FIREBASE_CONFIG);fs=firebase.firestore();
+      var c0=null;try{c0=localStorage.getItem(CODE_KEY);}catch(x){}
+      if(c0)conectar(c0);else pedirCodigo();
+    }catch(e){semNuvem("Não foi possível conectar ao Firebase. Salvo apenas neste aparelho.");}
+  }
+  $("codigo").addEventListener("click",function(){
+    if(configurado&&fs)pedirCodigo();else alert("Configure o Firebase primeiro (veja o guia).");
+  });
+})();
+</script>
+</body>
+</html>
